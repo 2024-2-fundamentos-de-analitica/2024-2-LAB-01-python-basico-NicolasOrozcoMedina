@@ -8,20 +8,33 @@ utilizar pandas, numpy o scipy.
 
 def pregunta_07():
     """
-    Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla
+    Retorne una lista de tuplas que asocien las columnas 1 y 2. Cada tupla
     contiene un valor posible de la columna 2 y una lista con todas las letras
     asociadas (columna 1) a dicho valor de la columna 2.
-
-    Rta/
-    [(0, ['C']),
-     (1, ['E', 'B', 'E']),
-     (2, ['A', 'E']),
-     (3, ['A', 'B', 'D', 'E', 'E', 'D']),
-     (4, ['E', 'B']),
-     (5, ['B', 'C', 'D', 'D', 'E', 'E', 'E']),
-     (6, ['C', 'E', 'A', 'B']),
-     (7, ['A', 'C', 'E', 'D']),
-     (8, ['E', 'D', 'E', 'A', 'B']),
-     (9, ['A', 'B', 'E', 'A', 'A', 'C'])]
-
     """
+    # Abrir el archivo CSV
+    with open('files/input/data.csv', 'r') as archivo:
+        # Leer las líneas del archivo
+        lineas = archivo.readlines()
+
+    # Procesar las líneas para convertirlas en una lista de datos
+    datos = [linea.strip().split('\t') for linea in lineas]
+
+    # Diccionario para almacenar listas de letras asociadas por valor de la columna 2
+    d = {}
+
+    # Recorrer cada fila de los datos
+    for fila in datos:
+        letra = fila[0]  # Columna 1
+        valor = int(fila[1])  # Columna 2 (convertir a entero)
+
+        # Agregar letra a la lista correspondiente al valor
+        if valor not in d:
+            d[valor] = []
+        d[valor].append(letra)
+
+    # Crear una lista de tuplas ordenada por los valores de la columna 2
+    resultado = sorted(d.items())
+    return resultado
+
+pregunta_07()
